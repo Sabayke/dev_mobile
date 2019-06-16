@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <script>
+      function formsend () {
+        var Prenom = document.getElementById('Prenom').value;
+        var Login = document.getElementById('Login').value;
+        var Nom = document.getElementById('Nom').value;
+        var Num_Tel = document.getElementById('Num_Tel').value;
+        var Mot_de_Passe = document.getElementById('Mot_de_Passe').value;
+        var Mot_de_Passe2 = document.getElementById('Mot_de_Passe2').value;
+        var profil = document.getElementById('profil').value;
+		var xhr = new XMLHttpRequest();
+        var url = 'php/control.php';
+        xhr.open('POST', url, true);
+          xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');  
+          // mon code js
+        var params=
+		"Prenom="+Prenom+
+		"&Login="+Login+
+		"&Nom="+Nom+
+		"&Num_Tel="+Num_Tel+
+		"&Mot_de_Passe="+Mot_de_Passe+
+		"&Mot_de_Passe2="+Mot_de_Passe2+
+		"&profil="+profil;
+        xhr.onreadystatechange = function() {
+          //Call a function when the state changes.
+          if(xhr.readyState == 4 && xhr.status == 200) {
+              alert(xhr.responseText);
+          }
+        }
+        xhr.send(params);
+    }
+</script>
+</head>
+
+<body>  
+                <form name ="mon_form" method="post" >
+                 
+                    <label for="prenom">Prénom:</label> 
+                    <input type="text"  id="Prenom" name="Prenom">
+                  
+                    <label for="nom">Login:</label> 
+                    <input type="text" id="Login" name="Login">
+                  
+                    <label for="telephone">Nom:</label>
+                    <input type="text"  id="Nom" name="Nom" >
+                    <label for="telephone">Telephone:</label>
+                    <input type="tel"  id="Num_Tel" name="Num_Tel">
+                 
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="Mot_de_Passe" name="Mot_de_Passe">
+                 
+                 
+                    <label for="password2">Confirmation mot de passe:</label>
+                    <input type="password"  id="Mot_de_Passe2" name="Mot_de_Passe2" >
+                    <select  id="profil" name="profil">
+                      <option value="client">Client</option>
+                      <option value="prestataire">Prestataire</option>
+                    </select>
+                  <input type="button" id="inscription" name="inscription" value="Inscription" onclick="formsend()">
+                </form>
+ 
+
+</body>
+</html>
