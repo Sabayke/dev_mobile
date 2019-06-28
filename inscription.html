@@ -7,90 +7,8 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font.css">
     <link rel="stylesheet" href="css/style.css">
-</head>
-<script type="text/javascript" src="js/verifchamp.js"></script> 
-<body>
-  <nav class="navbar navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <b>SMS Banking</b>
-        </a>
-      </div>
-  </nav>
-    <div class="text-center pt-0">
-        <div class="container">
-            <div class="row">
-              <div class="mx-auto col-lg-6 col-10">
-                <h1 class="mt-0 text-success">
-                  Inscription
-                </h1>
-                <p class="mb-3">
-                  Bienvenu sur notre plateforme de SMS-Banking, Veuillez vous incrire pour bénéficier de nos services.
-                </p>
-                <form class="text-left" method="post">
-                  <div class="form-group">
-                    <label for="prenom">Prénom:</label> 
-                    <input type="text" required class="form-control" id="prenom" name="prenom" placeholder="Daouda" onblur="verifchamp(this)">
-                    <span id="verifprenom"></span>
-                  </div>
-                  <div class="form-group">
-                    <label for="nom">Nom:</label> 
-                    <input type="text" required class="form-control" id="nom" placeholder="Diouf" name="nom" onblur="verifchamp(this)" ><span id="verifnom"></span>
-                  </div>
-                  <div class="form-group">
-                    <label for="telephone">Téléphone:</label>
-                    <input type="tel" required class="form-control" id="tele" name="tele" placeholder="770001122" onblur="verifchamp(this)"><span id="veriftel"></span>
-                  </div>
-                  <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" required class="form-control" id="pass" name="pass" placeholder="••••••••" onblur="verifchamp(this)" ><span id="verifpass"></span>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="password2">Confirmation mot de passe:</label>
-                    <input type="password" required class="form-control" id="pass2" name="pass2" placeholder="••••••••" onblur="verifchamp(this)"><span id="verifconf"></span>
-                  </div>
-                  </div>
-                  <div class="form-group">
-  
-                    <select class="form-control" id="profil" name="profil">
-                      <option value="client">Client</option>
-                      <option value="prestataire">Prestataire</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="login" hidden="true" id="log">Votre login:</label>
-                    <input type="text" required class="form-control" id="login" name="login" hidden="true" placeholder="Votre login" onblur="verifchamp(this)"><span id="veriflogin"></span>
-                  </div>
-                  <p class="text-right">
-                    Déjà inscrit: <a href="connexion.html">Connexion</a>
-                  </p>
-                  <input type="submit" class="btn btn-success" id="inscription" name="inscription" onclick="formsend()" value="Inscription"><div id="erreur"></div>
-                </form>
-             </div>
-           </div>
-        </div>
-    </div>
-
     <script type="text/javascript">
-       var prof = document.getElementById('profil');
-       var loglab = document.getElementById('log');
-       var logger = document.getElementById('login');
-
-       prof.addEventListener('change', function(){
-          if (prof.value != "client") {
-            loglab.hidden = false;
-            logger.hidden = false;
-            alert('Vous avez choisi comme type prestataire, veuillez remplir le champ login');
-          }else{
-            loglab.hidden = true;
-            logger.hidden = true;
-          }
-       });
-
-    </script>
-    <script type="text/javascript">
-      var validation = document.getElementById('inscription');
+      
       var prenom = document.getElementById('prenom');
       var nom = document.getElementById('nom');
       var login = document.getElementById('login');
@@ -104,9 +22,9 @@
       var password_m = document.getElementById('verifpass');
       var confpass_m = document.getElementById('verifconf');
       var tel_m = document.getElementById('veriftel');
-      validation.addEventListener('click', f_valid);
-
-      function f_valid(e){
+    
+  
+      function formsend(e){
         if (prenom.validity.valueMissing) {
           e.preventDefault();
           prenom_m.textContent = 'Prenom manquant';
@@ -157,47 +75,215 @@
           confpass_m.textContent = '';
         }
         }
-         confpass.addEventListener('input', function(){
-            if (this.value != password.value) {
-              confpass_m.textContent = 'Mot de passe non conforme';
-              confpass_m.style.color = 'red';
-            }
-            else{
-              confpass_m.textContent = '';
-            }
-          });
-         confpass.addEventListener('change', function(){
-            if (this.value != password.value) {
-              confpass_m.textContent = 'Mot de passe non conforme';
-              confpass_m.style.color = 'red';
-            }
-            else{
-              confpass_m.textContent = '';
-            }
-          });
-    </script>
-    <script>
-      function formsend () {
-        var prenom = document.getElementById('prenom');
-        var nom = document.getElementById('nom');
-        var login = document.getElementById('login');
-        var tele = document.getElementById('tele');
-        var pass = document.getElementById('pass');
-        var profil = document.getElementById('profil');
-        var xhr = new XMLHttpRequest();
-        var url = 'sva_version2/sva/php/control.php';
+    </script> 
+<script>
+      function formsend() {
+        var Prenom = document.getElementById('prenom').value;
+        var Login = document.getElementById('login').value;
+        var Nom = document.getElementById('nom').value;
+        var Num_Tel = document.getElementById('tele').value;
+        var Mot_de_Passe = document.getElementById('pass').value;
+        var Mot_de_Passe2 = document.getElementById('pass2').value;
+        var profil = document.getElementById('profil').value;
+    var xhr = new XMLHttpRequest();
+        var url = 'control.php';
         xhr.open('POST', url, true);
           xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');  
           // mon code js
-        var params="prenom="+prenom+"&nom="+nom+"&login="+login+"&tele="+tele+"&pass="+pass+"&profil="+profil;
+        var params=
+    "Prenom="+Prenom+
+    "&Login="+Login+
+    "&Nom="+Nom+
+    "&Num_Tel="+Num_Tel+
+    "&Mot_de_Passe="+Mot_de_Passe+
+    "&Mot_de_Passe2="+Mot_de_Passe2+
+    "&profil="+profil;
         xhr.onreadystatechange = function() {
           //Call a function when the state changes.
           if(xhr.readyState == 4 && xhr.status == 200) {
-              alert(xhr.responseText);
+            var msg = document.getElementById('msg');
+            msg.innerHTML = xhr.responseText;
           }
         }
         xhr.send(params);
+
     }
 </script>
+
+<script>
+  function formsend() {
+        var calendrierDH = new Date();
+        var an = calendrierDH.getFullYear();  
+        var mois = calendrierDH.getMonth();
+        var jour = calendrierDH.getDate();
+        var heure = calendrierDH.getHours();
+        var minute = calendrierDH.getMinutes();
+        var seconde = calendrierDH.getSeconds();
+        var tiers = calendrierDH.getTime();
+
+        if (mois<10) { mois= '0'+mois;}
+        if (jour<10) { jour= '0'+jour;}
+        if (heure<10) { heure= '0'+heure;}
+        if (minute<10) { minute= '0'+minute;}
+        if (seconde<10) { seconde= '0'+seconde;}
+        // if (mois<10) { mois= '0'+mois;}
+        Id_compte = "CPT00" + an + mois  + jour + heure + minute + seconde; 
+
+        var Type_Compte = document.getElementById('profil').value;
+        
+        if (Type_Compte == "client") {
+          var Id_User = document.getElementById('tele').value;
+          console.log("L'Id_User est : " + Id_User);
+          var Solde = 0;
+          var code = randomCode(1001, 9999);
+          console.log("le code secret est : " + code);
+          var Id_Compte = Id_Compte;
+          console.log("L'Id_Compte est :" + Id_Compte);
+          
+
+          var xhrc = new XMLHttpRequest();
+          var url = 'controlbis.php';
+          xhrc.open('POST', url, true);
+          xhrc.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');  
+          // mon code js
+            var params=
+            "Id_Compte="+Id_Compte+
+            "&Id_User="+Id_User+
+            "&Solde="+Solde+
+            "&Type_Compte="+Type_Compte+
+            "&code="+code;
+            xhrc.onreadystatechange = function() {
+          //Call a function when the state changes.
+              if(xhrc.readyState == 4 && xhrc.status == 200) {
+                var affich = document.getElementById('affich');
+                affich.innerHTML = xhrc.responseText;
+              }
+          }
+          xhrc.send(params);
+
+        }
+        if (Type_Compte == "prestataire") {
+          var Id_User = document.getElementById('login').value;
+          console.log("L'Id_User est :"+ Id_User);
+          var Solde = 0;
+          var code = randomCode(1001, 9999);
+          console.log("le code secret est : "+code);
+          var Id_Compte = Id_Compte;
+          console.log("L'Id_Compte est :"+ Id_Compte);
+        
+
+          var xhrc = new XMLHttpRequest();
+            var url = 'controlbis.php';
+            xhrc.open('POST', url, true);
+            xhrc.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');  
+              // mon code js
+            var params=
+            "Id_Compte="+Id_Compte+
+            "Id_User="+Id_User+
+            "&Solde="+Solde+
+            "&Type_Compte="+Type_Compte+
+            "&code="+code;
+            xhrc.onreadystatechange = function() {
+            //Call a function when the state changes.
+            if(xhrc.readyState == 4 && xhrc.status == 200) {
+              var affich = document.getElementById('affich');
+              affich.innerHTML = xhrc.responseText;
+            }
+          }
+          xhrc.send(params);
+
+        }
+
+
+    }
+</script>
+</head>
+<script type="text/javascript" src="js/verifchamp.js"></script> 
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <b>SMS Banking</b>
+        </a>
+      </div>
+  </nav>
+    <div class="text-center pt-0">
+        <div class="container">
+            <div class="row">
+              <div class="mx-auto col-lg-6 col-10">
+                <h1 class="mt-0 text-success">
+                  Inscription
+                </h1>
+                <p class="mb-3">
+                  Bienvenu sur notre plateforme de SMS-Banking, Veuillez vous incrire pour bénéficier de nos services.
+                </p>
+                <form class="text-left" method="post" >
+                  <div class="form-group">
+                    <label for="prenom">Prénom:</label> 
+                    <input type="text" required class="form-control" id="prenom" name="prenom" placeholder="Daouda" onblur="verifchamp(this)">
+                    <span id="verifprenom"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="nom">Nom:</label> 
+                    <input type="text" required class="form-control" id="nom" placeholder="Diouf" name="nom" onblur="verifchamp(this)" ><span id="verifnom"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="telephone">Téléphone:</label>
+                    <input type="tel" required class="form-control" id="tele" name="tele" placeholder="770001122" onblur="verifchamp(this)"><span id="veriftel"></span>
+                  </div>
+                   <div class="form-group">
+                    <label for="telephone">Type:</label>
+                    <select class="form-control" id="profil" name="profil">
+                      <option value="client">Client</option>
+                      <option value="prestataire">Prestataire</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="login" id="log" hidden="true">Votre login:</label>
+                    <input type="text" required class="form-control" id="login" hidden="true" name="login" placeholder="Votre login" onblur="verifchamp(this)"><span id="veriflogin"></span>
+                  </div>
+                  <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" required class="form-control" id="pass" name="pass" placeholder="••••••••" onblur="verifchamp(this)" ><span id="verifpass"></span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="password2">Confirmation mot de passe:</label>
+                    <input type="password" required class="form-control" id="pass2" name="pass2" placeholder="••••••••" onblur="verifchamp(this)"><span id="verifconf"></span>
+                  </div>
+                  </div>
+                  <div class="form-group">
+                    <p style="color: red;" id="msg" class="text-right"></p>
+                    <p style="color: blue;" id="affich" class="text-right"></p>
+                  </div>
+                  <p class="text-right">
+                    Déjà inscrit: <a href="connexion.php">Connexion</a>
+                  </p>
+                  <input type="button" class="btn btn-success" id="inscription" name="inscription" onclick="formsend()" value="Inscription">
+                </form>
+
+<script type="text/javascript">
+  var prof = document.getElementById('profil');
+  var loglab = document.getElementById('log');
+  var logger = document.getElementById('login');
+  var login_m = document.getElementById('veriflogin');
+
+  prof.addEventListener('change', function(){
+    if (prof.value != "client") {
+      loglab.hidden = false;
+      logger.hidden = false;
+      login_m.hidden = false;
+      alert('Vous avez choisi comme type prestataire, veuillez remplir le champ login');
+    }else{
+      loglab.hidden = true;
+      logger.hidden = true;
+      login_m.hidden = true;
+    }
+  });
+</script>
+             </div>
+           </div>
+        </div>
+    </div>
 </body>
 </html>
